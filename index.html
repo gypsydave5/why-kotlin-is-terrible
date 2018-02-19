@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>An Introduction to Rust</title>
+    <meta charset="utf-8">
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,800');
+      @import url('https://fonts.googleapis.com/css?family=Fira+Mono');
+
+      body { font-family: 'Fira Sans'; }
+      h1, h2, h3 {
+        font-family: 'Fira Sans';
+        font-weight: bold;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Fira Code','Fira Mono'; }
+
+      .logo { display: block; width: 100%; height: auto;}
+      img {max-width: 100%; max-height: 100%; display: block; margin: 0 auto;}
+      .center-image { width: 100%; height: 550px; display: block }
+
+      ul {
+        font-size: 32px;
+      }
+
+      ol {
+        font-size: 48px;
+      }
+
+      .quiet {
+        font-size: 50%
+      }
+
+      code {
+        color: white;
+        background-color: black;
+        display: inline-block;
+        border-radius: 5px;
+        padding: 0 5px;
+        margin: 2px 0;
+      }
+
+      .remark-code {
+        font-size: 22px !important;
+      }
+
+      .code-notes ul {
+        font-size: 28px;
+      }
+
+      .green { color: green; }
+      .red { color: red; }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: middle, center
+
+# A Brief
+### (and Incomplete)
+# Introduction to Rust
+### (for Rubyists)
+
+???
+So I'd like to talk about Rust, which is a language I've been looking at
+semi-seriously over the last six months. I'm not really sure about the best way
+of doing this.
+---
+
+## About Me (@gypsydave5)
+
+- Makers Academy August 2014
+- Full Stack Developer @Mergermarket ~2 years
+- Working with NodeJS, Go and *not enough* Ruby
+- Bit of a functional programming nut<br> .quiet[(but I don't bite)]
+- Addicted to learning new languages
+
+???
+In fact, strongly believe that learning other languages helps learn all languages
+"Travel broadens the mind"
+
+---
+# Agenda
+
+### 0: Why Rust?
+### 1: Getting going with Rust
+### 2: What Ownership Gets Us
+### 3: Putting Rust into Ruby
+
+---
+
+class: center, middle
+
+# What is Rust?
+
+---
+
+##History
+
+- Started in 2006 by Graydon Hoare
+- Mozilla sponsors in 2009
+- Pre-alpha compiler released in 2012
+- Rust 1.0: 2015
+- _"Most loved language 2016, 2017"_
+
+(as voted for on Stack Overflow)
+
+---
+# From the website
+
+.middle[## "Rust is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety."]
+
+---
+
+![what does that mean?](https://media.giphy.com/media/pdQB12mDIHpeM/giphy.gif)
+
+---
+# 'Pillars' of Rust
+
+- Memory safety without garbage collection
+- Concurrency without data races
+- Abstraction without overhead
+
+---
+
+![what does that mean?](https://media.giphy.com/media/pdQB12mDIHpeM/giphy.gif)
+
+---
+# Slogan
+
+.middle[# "Rust: fast, reliable, productive — pick three"]
+
+---
+
+![what does that mean?](https://media.giphy.com/media/pdQB12mDIHpeM/giphy.gif)
+
+---
+class: center, middle
+
+## Part 0
+
+# Why Rust?
+
+???
+Demonstrate speed difference
+Over 200 times faster than Ruby
+
+---
+class: center, middle
+
+# It's FAST
+
+---
+class: center, middle
+
+# REALLY, REALLY FAST
+
+---
+class: center, middle
+
+# Look, I'll show you...
+
+---
+class: center, middle
+
+## Part I
+
+# Getting Going with Rust
+
+---
+class: center, middle
+
+# Installing Rust
+
+```bash
+curl https://sh.rustup.rs -sSf | sh
+
+```
+
+(yes it's that easy)
+
+???
+So let's get into it - installing Rust
+
+---
+class: center, middle
+
+# Starting a new project
+
+```bash
+cargo new --bin hello_world
+```
+
+`cargo` is Rust's magic do-everything tool. Think `bundler` with knobs on.
+
+???
+---
+class: center, middle
+
+# Building the executable
+
+```bash
+cargo build
+```
+(it's a compiled language - so we compile it)
+
+---
+class: center, middle
+
+# Running the program
+
+```bash
+cargo run
+```
+(it's _that_ easy)
+
+---
+`hello_world/src/main.rs`
+
+.code-middle[
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+]
+---
+`hello_world/src/main.rs`
+
+.code-middle[
+```rust
+*fn main() {
+    println!("Hello, world!");
+}
+```
+]
+- `def` is spelled `fn` in Rust.
+- executable programs start with a `main` function.
+- function bodies are in `{}`
+---
+`hello_world/src/main.rs`
+
+.code-middle[
+```rust
+fn main() {
+*   println!("Hello, world!");
+}
+```
+]
+
+- `println!` prints a line - that's easy!
+- Lines end in `;`
+
+---
+class: center, middle
+#Let's write some code
+---
+class: center, middle
+## Function that returns a Vector of two numbers, `1` and `2`
+---
+`hello_world/src/main.rs`
+
+```rust
+fn gimmee_a_vector() -> Vec<i32> {
+    let mut my_vector = Vec::new();
+    my_vector.push(1);
+    my_vector.push(2);
+    my_vector
+}
+```
+---
+`hello_world/src/main.rs`
+
+```rust
+*fn gimmee_a_vector() -> Vec<i32> {
+    let mut my_vector = Vec::new();
+    my_vector.push(1);
+    my_vector.push(2);
+    my_vector
+}
+```
+- Ahh! Types!
+- Return type after the `->`
+- `Vec` (Vector) in Rust, `Array` in Ruby
+- `Vec<i32>` - a vector of `i32`s - 32 bit Integers.
+---
+`hello_world/src/main.rs`
+
+```rust
+fn gimmee_a_vector() -> Vec<i32> {
+*   let mut my_vector = Vec::new();
+    my_vector.push(1);
+    my_vector.push(2);
+    my_vector
+}
+```
+
+- `::` accesses functions in a module.
+- The `new()` function from the `Vec` module makes a new vector.
+- `let` declares a variable - think `var` in JavaScript.
+- `let mut` declares a variable that can be mutated.
+---
+`hello_world/src/main.rs`
+
+```rust
+fn gimmee_a_vector() -> Vec<i32> {
+    let mut my_vector = Vec::new();
+*   my_vector.push(1);
+*   my_vector.push(2);
+    my_vector
+}
+```
+
+- We use dot notation to `push()` elements into the vector.
+---
+`hello_world/src/main.rs`
+
+```rust
+fn gimmee_a_vector() -> Vec<i32> {
+    let mut my_vector = Vec::new();
+    my_vector.push(1);
+    my_vector.push(2);
+*   my_vector
+}
+```
+
+- When a line does not end in a semi-colon, it is what the block (`{}`) evaluates
+to.
+- Here, the return value of the function.
+---
+class: center, middle
+#Let's print out our vector
+---
+class: center, middle
+#By iterating over it
+---
+`hello_world/src/main.rs`
+
+```rust
+*fn print_vector(vector : Vec<i32>) {
+    for n in vector {
+        println!("{}", n);
+    }
+}
+```
+- After `:` we write the argument type
+- (it's the same for `let` declarations)
+---
+`hello_world/src/main.rs`
+
+```rust
+fn print_vector(vector : Vec<i32>) {
+*   for n in vector {
+        println!("{}", n);
+    }
+}
+```
+- This is one of the ways we can iterate in Rust
+---
+`hello_world/src/main.rs`
+
+```rust
+fn print_vector(vector : Vec<i32>) {
+    for n in vector {
+*       println!("{}", n);
+    }
+}
+```
+- `{}` is a placeholder in a Rust format string.
+---
+class: center, middle
+# Let's print it out again!
+
+???
+Now add an extra `print_vector(a_vector)` to the `main()`
+---
+class: center, middle
+#UH OH!
+---
+```
+error[E0382]: use of moved value: `a_vector`
+ --> src/main.rs:4:18
+  |
+3 |     print_vector(a_vector);
+  |                  -------- value moved here
+4 |     print_vector(a_vector);
+  |                  ^^^^^^^^ value used here after move
+  |
+  = note: move occurs because `a_vector` has type `std::vec::Vec<i32>`, which does not implement the `Copy` trait
+```
+---
+class: center, middle
+# Ownership
+---
+# The Rules Of Ownership:
+--
+
+- Every variable has *ONE* and *ONLY ONE* owner
+--
+
+- An owner is the scope - `{}`
+--
+
+- When you call a function, you move ownership
+--
+
+- Send a variable to a block, you move ownership
+--
+
+- When you reassign, you move ownership
+--
+
+- Basically, if you do anything, you move it
+--
+
+- When the owner dies, so does the variable
+---
+class: center, middle
+# How do we work with this?
+---
+class: center, middle
+# Could just return the variable...
+???
+- Demonstrate returning the vector from print_vector
+- show we have to use `clone()` because of the move
+- redeclaration (try resassignment) in main
+---
+`hello_world/src/main.rs`
+
+```rust
+fn print_vector(vector : Vec<i32>) -> Vec<i32> {
+*   for n in vector.clone() {
+        println!("{}", n);
+    }
+    return vector;
+}
+```
+- iteration _also_ consumes the vector
+- `clone()` makes a copy.
+
+---
+`hello_world/src/main.rs`
+
+```rust
+fn print_vector(vector : Vec<i32>) -> Vec<i32> {
+    for n in vector.clone() {
+        println!("{}", n);
+    }
+*   return vector;
+}
+```
+- We can explicitly return with `return`.
+???
+Return will explicitly return from a function
+---
+`hello_world/src/main.rs`
+
+```rust
+fn main() {
+    let a_vector = gimmee_a_vector();
+*   let a_vector = print_vector(a_vector);
+    print_vector(a_vector);
+}
+```
+- It's fine to redeclare a variable in Rust.
+---
+
+# This could get messy
+
+```rust
+fn sum_three(a : u32, b : u32, c : u32) -> (u32, u32, u32, u32) {
+  let answer = a + b + c;
+  return (answer, a, b, c);
+}
+
+fn main() {
+  let a = 1;
+  let b = 2;
+  let c = 3;
+
+  let (answer, a, b, c)  = sum_three(a, b, c);
+  println!("{} + {} + {} = {}", a, b, c, answer);
+}
+
+
+```
+[link](https://is.gd/CYVGAZ)
+
+???
+- If we keep passing around ownership, things will look _horrible_.
+- We don't want to own them, we just want to borrow them - get 'a reference'
+---
+class: center, middle
+
+# Better solution?
+---
+class: center, middle
+
+# Borrowing
+
+(or 'referencing')
+
+???
+
+Rewrite print_vector to use references
+
+---
+
+# Two types of borrowing:
+
+--
+- Immutable - add an `&` (`&T`)
+
+--
+- Mutable - add an `&mut T` (`&mut T`)
+
+(kinda like we say with `let`)
+---
+# The rules of borrowing
+
+- As many immutable borrows (`&T`) as you like at any time
+--
+
+- *OR*
+--
+
+- *ONE* mutable borrow (`&mut T`) at any time
+---
+# Fine, but...
+
+![WHY](https://media.giphy.com/media/cPKWZB2aaB3rO/giphy.gif)
+
+---
+
+class: center, middle
+
+## Part II
+
+# What Ownership Gets Us
+
+---
+#Q: What does ownership buy us?
+
+--
+1. No garbage collector
+
+--
+2. Built in concurrency model
+
+---
+
+#1. No Garbage Collector
+
+---
+class: center, middle
+# What is a garbage collector?
+---
+# Ruby puts things into memory
+
+```ruby
+def get_me_a_sandwich size
+  size += 1
+  Sandwich.new size
+end
+
+sandwich = get_me_a_sandwich 5
+```
+
+- Sandwich making function!
+---
+# Ruby puts things into memory
+
+```ruby
+def get_me_a_sandwich size
+  size += 1
+* Sandwich.new size
+end
+
+sandwich = get_me_a_sandwich 5
+```
+- The sandwich goes into memory
+---
+# Ruby puts things into memory
+
+```ruby
+def get_me_a_sandwich size
+  size += 1
+  Sandwich.new size
+end
+
+*sandwich = get_me_a_sandwich 5
+```
+- The sandwich is handed over.
+---
+class: center
+# This is a MASSIVE simplification
+
+(but we're talking about Rust, not Memory Management in Ruby)
+
+(ask me about Stack and Heap at the bar)
+---
+# But ...
+```ruby
+def make_a_million_sandwiches_but_only_give_me_one
+  lots = 1_000_000
+
+  lots.times do
+    Sandwich.new 5
+  end
+
+  Sandwich.new 6
+end
+```
+- Let's make a million sandwiches!
+---
+# But ...
+```ruby
+def make_a_million_sandwiches_but_only_give_me_one
+  lots = 1_000_000
+
+  lots.times do
+*   Sandwich.new 5
+  end
+
+  Sandwich.new 6
+end
+```
+- Make many sandwiches
+---
+# But ...
+```ruby
+def make_a_million_sandwiches_but_only_give_me_one
+  lots = 1_000_000
+
+  lots.times do
+    Sandwich.new 5
+  end
+
+* Sandwich.new 6
+end
+```
+- But we use only one of them
+---
+class: center, middle
+#Q: How does Ruby get rid of the other sandwiches?
+---
+class: center
+#A: GARBAGE COLLECTOR
+![garbage collector](http://p.fod4.com/p/media/1d46854405/riBbiE0kRAi8bMgHlp1K_Freakout.gif)
+
+a process in the background that runs around tidying up after your program,
+working out which bits of memory you don't need anymore. It's really clever.
+---
+class: center, middle
+#Q: Is there an alternative?
+
+---
+
+class: center, middle
+#A: DO IT YOURSELF!
+
+(like the good old days in C)
+---
+## Manual Memory Management (in C)
+```c
+  int *number;
+  number = (int *)malloc(sizeof(int));
+  *number = 55;
+  free(number);
+```
+---
+## Manual Memory Management (in C)
+```c
+  int *number;
+* number = (int *)malloc(sizeof(int));
+  *number = 55;
+  free(number);
+```
+- We get a space in memory to put a number in.
+---
+## Manual Memory Management (in C)
+```c
+  int *number;
+  number = (int *)malloc(sizeof(int));
+* *number = 55;
+  free(number);
+```
+- We put a number in it.
+---
+## Manual Memory Management (in C)
+```c
+  int *number;
+  number = (int *)malloc(sizeof(int));
+  *number = 55;
+* free(number);
+```
+- We free up that bit of memory when we're done.
+- What the Garbage Collector does for us in Ruby
+---
+#Q: What happens if we forget to free up the memory?
+---
+#A: Memory Leaks
+
+![leak]( https://media.giphy.com/media/3o6Mbf0fbXwLFrbefK/giphy.gif)
+---
+## Garbage collector
+  - .green[\++] Safer, no need for humans to free memory.
+  - .red[\--] Slower, more of an overhead.
+
+## Manual memory management
+  - .green[\++] Faster, no time spent on freeing memory.
+  - .red[\--] Prone to human incompetence.
+---
+# Ownership is a Third way
+
+--
+- every variable has an owner
+
+--
+- when the program leaves the owning scope ...
+
+--
+- ... all the owned variables are freed
+- AUTOMATICALLY
+
+--
+- one rule, cheap to use, easy(ish) to remember
+
+---
+#Where Variables are Freed
+```rust
+fn main() {
+  let a = 5;
+    {
+      let b = 10;
+      // b is freed here!
+      // (and cannot be used after the `}`)
+    }
+  // a is freed here!
+  // (and cannot be used after the `}`)
+}
+```
+
+---
+# So...
+
+- .green[\++] No GC == less overhead == faster code
+- .green[\++] No manual memory management == less bugs
+- .red[\--] Learning how this works == upfront cost
+
+---
+class: center, middle
+
+# Ownership / Borrowing makes Rust fast and safe
+
+(and a pain in the ass sometimes)
+
+---
+## A quick note on concurrency
+
+- Borrowing rules avoid _some_ concurrency issues
+- i.e. prevents access of data for more than one writer
+- many more structures and techniques in Rust
+
+---
+class: center, middle
+
+## Part III
+
+# Putting Rust into Ruby
+
+---
+
+# FFI (Foreign Function Interface)
+
+##_"A foreign function interface (FFI) is a mechanism by which a program written in one programming language can call routines or make use of services written in another."_
+
+(Thank you [Wikipedia](https://en.wikipedia.org/wiki/Foreign_function_interface))
+
+---
+
+## Goes something like...
+
+--
+1. Write code in a different language
+
+--
+2. Compile it into a shared C library
+
+--
+3. Bring it in to Ruby with a FFI library
+
+(we will use [Fiddle](http://ruby-doc.org/stdlib-2.4.0/libdoc/fiddle/rdoc/Fiddle.html))
+---
+#Fibonacci (Ruby)
+
+```ruby
+def ruby_fibonacci(number)
+    a = 0
+    b = 1
+
+    number.times do
+        tmp = a
+        a = b
+        b = a + tmp
+    end
+
+    a
+end
+```
+---
+#Fibonacci (Rust)
+
+```rust
+#[no_mangle]
+pub extern "C" fn fibonacci(number: u32) -> u32 {
+    let mut a = 0;
+    let mut b = 1;
+
+    for _ in 0..number {
+        let tmp = a;
+        a = b;
+        b = a + tmp;
+    }
+
+    a
+}
+```
+---
+#Fibonacci (Rust)
+
+```rust
+*#[no_mangle]
+pub extern "C" fn fibonacci(number: u32) -> u32 {
+    let mut a = 0;
+    let mut b = 1;
+
+    for _ in 0..number {
+        let tmp = a;
+        a = b;
+        b = a + tmp;
+    }
+
+    a
+}
+```
+
+- `no_mangle` tells Rust not to change the name
+---
+#Fibonacci (Rust)
+
+```rust
+#[no_mangle]
+*pub extern "C" fn fibonacci(number: u32) -> u32 {
+    let mut a = 0;
+    let mut b = 1;
+
+    for _ in 0..number {
+        let tmp = a;
+        a = b;
+        b = a + tmp;
+    }
+
+    a
+}
+```
+
+- `pub` makes it public (i.e. exported)
+- `extern` makes it FFI callable
+- `"C"` makes it look like C
+
+---
+#Fibonacci (Rust)
+`Cargo.toml`
+
+```toml
+[package]
+name = "fibonacci"
+version = "0.1.0"
+authors = ["David Wickes <dave.wickes@gmail.com>"]
+
+[lib]
+*crate_type = ["dylib"]
+
+[dependencies]
+```
+
+- Make sure we're compiling to dylib
+
+---
+class: center, middle
+
+# Building for release
+
+```bash
+cargo build --release
+```
+
+---
+#Requiring and Running Rust
+
+```ruby
+require 'fiddle'
+
+rust_fibonacci_library = Fiddle.dlopen('./fibonacci_rust/target/release/libfibonacci.dylib')
+rust_fibonacci = Fiddle::Function.new(
+  rust_fibonacci_library['fibonacci'],
+  [Fiddle::TYPE_INT],
+  Fiddle::TYPE_INT
+)
+
+puts rust_fibonacci.call(10)
+```
+
+---
+#Requiring and Running Rust
+
+```ruby
+*require 'fiddle'
+
+rust_fibonacci_library = Fiddle.dlopen('./fibonacci_rust/target/release/libfibonacci.dylib')
+rust_fibonacci = Fiddle::Function.new(
+  rust_fibonacci_library['fibonacci'],
+  [Fiddle::TYPE_INT],
+  Fiddle::TYPE_INT
+)
+
+puts rust_fibonacci.call(10)
+```
+
+- `fiddle` is our FFI library
+
+---
+#Requiring and Running Rust
+
+```ruby
+require 'fiddle'
+
+*rust_fibonacci_library = Fiddle.dlopen('./fibonacci_rust/target/release/libfibonacci.dylib')
+rust_fibonacci = Fiddle::Function.new(
+  rust_fibonacci_library['fibonacci'],
+  [Fiddle::TYPE_INT],
+  Fiddle::TYPE_INT
+)
+
+puts rust_fibonacci.call(10)
+```
+
+- `.dlOpen()` takes the path to the compiled dylib with our function in
+
+(DYnamic LIBrary. Use `.dylib` on Mac - compile and use `.so` on Linux)
+
+---
+#Requiring and Running Rust
+
+```ruby
+require 'fiddle'
+
+rust_fibonacci_library = Fiddle.dlopen('./fibonacci_rust/target/release/libfibonacci.dylib')
+*rust_fibonacci = Fiddle::Function.new(
+* rust_fibonacci_library['fibonacci'],
+* [Fiddle::TYPE_INT],
+* Fiddle::TYPE_INT
+)
+
+puts rust_fibonacci.call(10)
+```
+
+- Declare a new lambda, telling it
+  - function name in the library
+  - argument types (as Array)
+  - return type
+---
+#Requiring and Running Rust
+
+```ruby
+require 'fiddle'
+
+rust_fibonacci_library = Fiddle.dlopen('./fibonacci_rust/target/release/libfibonacci.dylib')
+rust_fibonacci = Fiddle::Function.new(
+  rust_fibonacci_library['fibonacci'],
+  [Fiddle::TYPE_INT],
+  Fiddle::TYPE_INT
+)
+
+*puts rust_fibonacci.call(10)
+```
+
+- Call it!
+---
+class: center, middle
+
+## Let's look at that one I made earlier...
+
+---
+class: center, middle
+# Summary
+---
+class: center, middle
+# This is totally incomplete
+---
+# What I've not talked about
+
+--
+- Tests! Built in, simple, effective!
+
+--
+- `Struct`s and `impl` - making objects and methods
+
+--
+- Lifetimes - advanced annotation to a borrow
+
+--
+- Modules - how to organize Rust code
+
+--
+- Traits - Rust's extensible interfaces
+
+--
+- Macros
+
+--
+- ... and much, much more.
+
+---
+
+## Link list example
+
+- Rust in General
+  - Installing [rustup](https://www.rustup.rs/)
+  - [Rust standard library docs](https://doc.rust-lang.org/std/)
+  - [Both _new_ and _old_ Rust Books](https://github.com/rust-lang/book)
+  - [#rust-beginners irc](https://client00.chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust-beginners) on irc.mozilla.org
+  - [Rust Blog](https://blog.rust-lang.org/)
+
+(irc is like Slack on hard mode)
+
+- Rust in Ruby
+  - [FFI](https://github.com/ffi/ffi) - a different Ruby FFI library
+  - [Helix](https://usehelix.com/)
+  - [Ruru](https://github.com/d-unseductable/ruru)
+  - [Yehuda Katz rewrites `String#blank?` in Rust](https://engineering.intercom.com/yehuda-on-rust-with-ruby/)
+
+---
+class: center, middle
+#Questions? Ask me at the bar.
+
+### (or @gypsydave5 on Twitter)
+---
+class: center, middle
+# Thank You!
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({
+        highlightStyle: 'monokai',
+        highlightLines: true,
+        slideNumberFormat: '',
+        navigation: {
+          scroll: false,
+        }
+      });
+    </script>
+  </body>
+</html>
