@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>An Introduction to Rust</title>
+    <title>Why Kotlin is Terrible</title>
     <meta charset="utf-8">
     <style>
       @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,800');
@@ -266,41 +266,20 @@ class: center, middle
 ---
 
 ```kotlin
-fun addTwoIfThree(numbers: List<Int>): List<Int>
-  numbers.map { 
-  if (it === 3) {
-    return it + 2
+fun addTwoIfThree(numbers: List<Int>): List<Int> {
+  numbers.map {
+    if (it === 3) {
+      return it + 2 // return bound to `addTwoIfThree`
     } else {
-    
+      return it
     }
   }
 }
 ```
 
 ---
-
-## Link list example
-
-- Rust in General
-  - Installing [rustup](https://www.rustup.rs/)
-  - [Rust standard library docs](https://doc.rust-lang.org/std/)
-  - [Both _new_ and _old_ Rust Books](https://github.com/rust-lang/book)
-  - [#rust-beginners irc](https://client00.chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust-beginners) on irc.mozilla.org
-  - [Rust Blog](https://blog.rust-lang.org/)
-
-(irc is like Slack on hard mode)
-
-- Rust in Ruby
-  - [FFI](https://github.com/ffi/ffi) - a different Ruby FFI library
-  - [Helix](https://usehelix.com/)
-  - [Ruru](https://github.com/d-unseductable/ruru)
-  - [Yehuda Katz rewrites `String#blank?` in Rust](https://engineering.intercom.com/yehuda-on-rust-with-ruby/)
-
----
 class: center, middle
-#Questions? Ask me at the bar.
-
-### (or @gypsydave5 on Twitter)
+# Questions?
 ---
 class: center, middle
 # Thank You!
