@@ -1,6 +1,4 @@
-#A Brief (and Incomplete) Introduction to Rust (for Rubyists)
-
-Presentation given at the London Ruby User Group on 08/05/2017.
+# Why Kotlin is Terrible
 
 Built using [remark](https://remarkjs.com/#1)
 
