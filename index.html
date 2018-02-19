@@ -150,7 +150,7 @@ fun addTwo (number: Int): Int = number + 2
 
 ???
 
-Can just assign the result as an expression
+Can just assign the result as an expression - much as with Scala
 
 ---
 ## Variation 2: Function reference
@@ -191,7 +191,7 @@ Javscript - hey, it's Scheme in the Browser! Woo hoo.
 And we can do much the same with Kotlin.
 
 ---
-## Variation 3: Lambda
+## Variation 3: Lambda!
 
 ```kotlin
 val listOfNumbers = listOf(1, 2, 3, 4)
@@ -237,6 +237,7 @@ So, we're up to five variations so far... but it's far from over...
 
 ---
 ## The point of no `return`...
+
 ```kotlin
 val listOfNumbers = listOf(1, 2, 3, 4)
 listOfNumbers.map({number -> number + 2})
@@ -256,9 +257,11 @@ listOfNumbers.map { it + 2 }
 ???
 
 You may have noticed that the Lambdas have no return. That's because,
-like in Rust or Ruby or whatever, they evaluate to their last expression.
+like in Rust or Ruby or Scheme or Common Lisp or whatever, they evaluate to
+their last expression.
 
-What if you _do_ return?
+What if you _do_ want to return? Say a nice early return if you meet some
+condition...
 
 ---
 class: center, middle
@@ -267,15 +270,42 @@ class: center, middle
 
 ```kotlin
 fun addTwoIfThree(numbers: List<Int>): List<Int> {
-  numbers.map {
-    if (it === 3) {
+  return numbers.map {
+    if (it == 3) {
       return it + 2 // return bound to `addTwoIfThree`
-    } else {
-      return it
     }
+    return it
   }
 }
 ```
+
+This will fail to compile (`Int` is not a `List<Int>`)
+
+???
+So this doesn't work because `return` is bound to the outer, named function. We
+could make this work by using the `if` as an expression (it is an expression),
+but if we were severely wedded to `return` - maybe we took too much C as kids -
+there is a way..
+
+---
+```
+fun addTwoIfThree(numbers: List<Int>): List<Int> {
+    return numbers.map { it ->
+        if (it == 3) {
+            return@map it + 2
+        }
+        return@map it
+    }
+}
+```
+
+???
+We can add a named return with `return@map` - this tells the Lambda where to
+bind the return to - in this case the `map`. Problem solved.
+
+But wait... isn't this confusing? What if I wanted a _real_ return?
+
+---
 
 ---
 class: center, middle
