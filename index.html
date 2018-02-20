@@ -78,8 +78,7 @@ In fact, strongly believe that learning other languages helps learn all language
 
 ### 0: Kotlin overview
 ### 1: Variations on `addTwo`
-### 2: `let` me Entertain you
-### 3: But what _is_ it???
+### 2: Why Kotlin is Terrible
 
 ---
 
@@ -227,6 +226,9 @@ val listOfNumbers = listOf(1, 2, 3, 4)
 listOfNumbers.map { it + 2 }
 ```
 
+???
+So there's the Groovy `it`
+
 ---
 class: middle, center
 ## Variations so far: 5
@@ -240,7 +242,7 @@ So, we're up to five variations so far... but it's far from over...
 
 ```kotlin
 val listOfNumbers = listOf(1, 2, 3, 4)
-listOfNumbers.map({number -> number + 2})
+listOfNumbers.map({ number -> number + 2 })
 ```
 
 ```kotlin
@@ -251,7 +253,6 @@ listOfNumbers.map { number -> number + 2 }
 ```kotlin
 val listOfNumbers = listOf(1, 2, 3, 4)
 listOfNumbers.map { it + 2 }
-
 ```
 
 ???
@@ -288,14 +289,14 @@ but if we were severely wedded to `return` - maybe we took too much C as kids -
 there is a way..
 
 ---
-```
+```kotlin
 fun addTwoIfThree(numbers: List<Int>): List<Int> {
-    return numbers.map { it ->
-        if (it == 3) {
-            return@map it + 2
-        }
-        return@map it
+  return numbers.map {
+    if (it == 3) {
+      return@map it + 2 // bound to the scope of `map`
     }
+    return@map it
+  }
 }
 ```
 
@@ -306,11 +307,134 @@ bind the return to - in this case the `map`. Problem solved.
 But wait... isn't this confusing? What if I wanted a _real_ return?
 
 ---
+## Variation 6: Anonymous Functions
+
+```kotlin
+val addTwo = fun (number: Int): Int {
+  return number + 2
+}
+```
+
+```kotlin
+val listOfNumbers = listOf(1, 2, 3, 4)
+listOfNumbers.map(fun (number: Int): Int {
+  return number + 2
+})
+```
+
+???
+So there's a whole parallel syntax for declaring anonymous functions in Kotlin,
+called "Anonymous Functions"
+
+---
+## Variation 7: Single-Expression AF
+
+```kotlin
+val addTwo = fun (number: Int): Int = number + 2
+```
+
+```kotlin
+val listOfNumbers = listOf(1, 2, 3, 4)
+listOfNumbers.map(fun (number: Int): Int = number + 2)
+```
+
+???
+Yes we can do the same tricks we did with the named functions too.
+
+---
+```kotlin
+fun addTwoIfThree(numbers: List<Int>): List<Int> {
+  return numbers.map(fun (number: Int): Int {
+    if (number == 3) {
+      return number + 2 // bound to the scope of `map`
+    }
+    return number
+  })
+}
+```
+
+???
+And - hooray - now I can use a real early `return` in this map.
 
 ---
 class: center, middle
+# Why?
+
+???
+Is this really a good idea?
+  - two different syntaxes for (almost) exactly the same generic concept?
+  - using both of the general words for that same concept (see Ruby lambda/proc)
+
+Maybe it was a performance thing? One of the two would compile down to something
+more performant?
+
+So I did what every good developer would do and asked on Stack Overflow
+
+---
+class: middle, center
+
+# [My Question on Stack Overflow](https://stackoverflow.com/questions/48112081/why-does-kotlin-have-two-syntaxes-for-lambdas-anonymous-functions)
+
+???
+Actually the answer is pretty simple
+
+---
+class: middle, center
+
+## Answer: `return@` Considered Ugly
+
+???
+It was an issue of aesthetics - the `return@`
+
+---
+class: middle, center
+
+## Answer: `return@` Considered Ugly
+
+---
+class: middle, center
+
+## 2: Why Kotlin is Terrible
+
+???
+
+Add conclusions
+
+---
+class: middle, center
+
+# Let's Support Roman Numerals!
+```kotlin
+val five = V
+val ten = V + 5
+```
+
+???
+I'm not a language designer - thank goodness - but this seems like a bad move to
+me. It adds a confusion to the heart of the language.
+
+Imagine someone wanted to be able to write integer literals as Roman numerals?
+What's the advantages to that? Hardly any - makes maybe writing the dates of
+films and TV a bit easier. But the disadvantages are immense - half the team
+doing arabic numerals, half doing Roman.
+
+But in a way this is worse, because we mostly have an intuitive idea of integers.
+By naming the two syntaxes after the only two vaguely neutral words for
+a lambda/anonymous function, the confusion can only be compounded - write
+a lambda - do you mean an anonymous function - no I mean a lambda :( - it's
+worse than Ruby.
+
+---
+class: middle, center
+
+# `</rant>`
+
+---
+
+class: center, middle
 # Questions?
 ---
+
 class: center, middle
 # Thank You!
     </textarea>
