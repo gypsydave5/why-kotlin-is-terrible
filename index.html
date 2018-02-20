@@ -414,7 +414,14 @@ job done, why have I trapped you all in a room to talk about this?
 
 ???
 
-- Syntactic sugar everywhere in Kotlin - not even touched on half of it
+- Syntactic sugar everywhere in Kotlin - not even touched on half of it - i.e.
+  infix operations
+- Placing the block within or outside the parenthesese (as in Ruby/Smalltalk)
+  good example.
+- Just leads to endless reformating back and forth as I change my mind about
+  what 'looks' right
+- Increases the overhead in comprehension... desperately remembering what `it`
+  is.
 
 ---
 # 2. Mixed paradigms
@@ -430,18 +437,18 @@ job done, why have I trapped you all in a room to talk about this?
 - Leads to adding more expressions into the language instead of statements...
   `if` becomes an expression, Lambdas are expressions... but still keeping
   traditional procedural elements to the language such as `for..`
-- and I think it's in this
+- this is the seed of the `return` vs `return@` difference
 
 ---
 # 3. Plain old bad design
 
-.middle[## "Every sufficiently complex application/language/tool will either have to use Lisp or reinvent it the hard way."]
+.middle[## Lambdas vs. Anonymous Functions]
 
-.right[-- Greenspuns Tenth Rule Of Programming [(source)](http://wiki.c2.com/?GreenspunsTenthRuleOfProgramming)]
+???
+I'm not a language designer - thank goodness - but this seems like a bad move to
+me. It adds a confusion to the heart of the language.
 
 ---
-
-class: middle, center
 
 # Let's Support Roman Numerals!
 
@@ -451,9 +458,6 @@ val ten = V + 5
 ```
 
 ???
-I'm not a language designer - thank goodness - but this seems like a bad move to
-me. It adds a confusion to the heart of the language.
-
 Imagine someone wanted to be able to write integer literals as Roman numerals?
 What's the advantages to that? Hardly any - makes maybe writing the dates of
 films and TV a bit easier. But the disadvantages are immense - half the team
@@ -470,10 +474,29 @@ class: middle, center
 
 # `</rant>`
 
+???
+
+- There's a lot about Kotlin that I do like
+- it's very neat the way it handles `null` as a value and turns it into something like a `Maybe`.
+- And the IDE support is just wonderful - made me an IntelliJ convert.
+- But what worries me is that it's a (relatively) young language which has already become quite
+  messy in this one particular area.
+
 ---
 
 class: center, middle
-# Questions?
+# Questions? For you?
+
+???
+
+- So - questions - but for you?
+- Is this really a problem with Kotlin? Do those who write Kotlin recognise what
+  I'm saying?
+- Do all languages suffer from this sort of problem? Is it a 'new' language
+  issue? Is it a 'multi paradigm' language issue?
+- Am I just amazingly snooty and secretly wish I was clever enough to write
+  Common Lisp for a living.
+
 ---
 
 class: center, middle
