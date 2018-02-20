@@ -67,18 +67,15 @@ class: middle, center
 - Makers Academy graduate (August 2014)
 - Full Stack Developer @Acuris ~2.5 years
 - SpringerNature for ~3 months
-- Addicted to learning new languages
 
 ???
-In fact, strongly believe that learning other languages helps learn all languages
-"Travel broadens the mind"
 
 ---
 # Agenda
 
 ### 0: Kotlin overview
 ### 1: Variations on `addTwo`
-### 2: Why Kotlin is Terrible
+### 2: So What?
 
 ---
 
@@ -125,7 +122,11 @@ gone running to the hills...
 
 ---
 
-# 1: Anonymous functions/Lambdas/Blocks
+# 1: Variations on `addTwo`
+
+???
+To start I'm going to go through a few variations on a simple theme: a function
+that adds two to a number.
 
 ---
 ## Variation 0: A named function
@@ -266,7 +267,9 @@ condition...
 
 ---
 class: center, middle
+
 # Pro tip: Don't return
+
 ---
 
 ```kotlin
@@ -394,16 +397,54 @@ class: middle, center
 ---
 class: middle, center
 
-## 2: Why Kotlin is Terrible
+# 2: So What?
 
 ???
 
-Add conclusions
+So what's the big deal with the above? Why is this a bad thing - why is it even
+a thing? Languages have features, languages have different ways of getting the
+job done, why have I trapped you all in a room to talk about this?
 
 ---
+# 1. Too much 'Syntactic Sugar'
+
+.middle[## "Too much syntactic sugar causes cancer of the semi-colons"]
+
+.right[-- Alan Perlis, _Epigrams on Programming_ [(source)](http://pu.inf.uni-tuebingen.de/users/klaeren/epigrams.html)]
+
+???
+
+- Syntactic sugar everywhere in Kotlin - not even touched on half of it
+
+---
+# 2. Mixed paradigms
+
+.middle[## "Every sufficiently complex application/language/tool will either have to use Lisp or reinvent it the hard way."]
+
+.right[-- Greenspuns Tenth Rule Of Programming [(source)](http://wiki.c2.com/?GreenspunsTenthRuleOfProgramming)]
+
+???
+
+- Kotlin is aiming towards being a more functional language - supporting a more
+  functional paradigm - Scala
+- Leads to adding more expressions into the language instead of statements...
+  `if` becomes an expression, Lambdas are expressions... but still keeping
+  traditional procedural elements to the language such as `for..`
+- and I think it's in this
+
+---
+# 3. Plain old bad design
+
+.middle[## "Every sufficiently complex application/language/tool will either have to use Lisp or reinvent it the hard way."]
+
+.right[-- Greenspuns Tenth Rule Of Programming [(source)](http://wiki.c2.com/?GreenspunsTenthRuleOfProgramming)]
+
+---
+
 class: middle, center
 
 # Let's Support Roman Numerals!
+
 ```kotlin
 val five = V
 val ten = V + 5
