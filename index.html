@@ -71,6 +71,14 @@ class: middle, center
 ???
 
 ---
+class: middle, center
+![In need of sleep](https://media.giphy.com/media/3o6ZtaiPZNzrmRQ6YM/giphy.gif)
+
+???
+
+My dog woke me up at around four in the morning. I feel terrible.
+
+---
 # Agenda
 
 ### 0: Kotlin overview
@@ -151,6 +159,7 @@ fun addTwo (number: Int): Int = number + 2
 ???
 
 Can just assign the result as an expression - much as with Scala
+(apparently - not that I've done much Scala)
 
 ---
 ## Variation 2: Function reference
@@ -171,10 +180,12 @@ listOfNumbers.map(::addTwo)
 
 ???
 
-"Function reference" - like a pointer in C? Seems mad.
+"Function reference" - like a pointer in C? Seems mad. Or is it like the
+different lookup tables for functions and variables in Common Lisp? Anyway, not
+the nicest of syntaxes.
 
 But what if we wanted to inline the above function, like you would with
-that ultimate ergonomic functional language...
+that ultimate ergonomic functional programming language...
 
 ---
 # Javascript
@@ -188,7 +199,7 @@ listOfNumbers.map(number => number + 2)
 
 Javscript - hey, it's Scheme in the Browser! Woo hoo.
 
-And we can do much the same with Kotlin.
+And as you'd expect we can do much the same with Kotlin.
 
 ---
 ## Variation 3: Lambda!
@@ -365,13 +376,26 @@ class: center, middle
 
 ???
 Is this really a good idea?
-  - two different syntaxes for (almost) exactly the same generic concept?
-  - using both of the general words for that same concept (see Ruby lambda/proc)
+
+- two different syntaxes for (almost) exactly the same generic concept?
+- using both of the general words for that same concept (see Ruby lambda/proc)
+
+---
+class: center, middle
+
+# Similar to:
+
+## [Ruby `proc` vs `lambda`](https://stackoverflow.com/questions/626/when-to-use-lambda-when-to-use-proc-new)
+
+???
+
+I've never met a Rubyist who suggests that this is a good thing.
 
 Maybe it was a performance thing? One of the two would compile down to something
 more performant?
 
-So I did what every good developer would do and asked on Stack Overflow
+So I did what every good developer would do and asked on Stack Overflow? My
+first ever question...
 
 ---
 class: middle, center
@@ -379,7 +403,9 @@ class: middle, center
 # [My Question on Stack Overflow](https://stackoverflow.com/questions/48112081/why-does-kotlin-have-two-syntaxes-for-lambdas-anonymous-functions)
 
 ???
-Actually the answer is pretty simple
+Actually the answer is pretty simple. And it was posted by Dmitry Jermov of
+'Kotlin in Action' fame. And it has hardly any upvotes so... if anyone could
+that'd be great.
 
 ---
 class: middle, center
@@ -388,11 +414,6 @@ class: middle, center
 
 ???
 It was an issue of aesthetics - the `return@`
-
----
-class: middle, center
-
-## Answer: `return@` Considered Ugly
 
 ---
 class: middle, center
@@ -414,14 +435,17 @@ job done, why have I trapped you all in a room to talk about this?
 
 ???
 
-- Syntactic sugar everywhere in Kotlin - not even touched on half of it - i.e.
-  infix operations
-- Placing the block within or outside the parenthesese (as in Ruby/Smalltalk)
-  good example.
-- Just leads to endless reformating back and forth as I change my mind about
-  what 'looks' right
-- Increases the overhead in comprehension... desperately remembering what `it`
-  is.
+Syntactic sugar everywhere in Kotlin - not even touched on half of it - i.e.
+infix operations
+
+Placing the block within or outside the parenthesese (as in Ruby/Smalltalk)
+good example.
+
+Just leads to endless reformating back and forth as I change my mind about
+what 'looks' right
+
+Increases the overhead in comprehension... desperately remembering what `it`
+is.
 
 ---
 # 2. Mixed paradigms
@@ -432,21 +456,44 @@ job done, why have I trapped you all in a room to talk about this?
 
 ???
 
-- Kotlin is aiming towards being a more functional language - supporting a more
-  functional paradigm - Scala
-- Leads to adding more expressions into the language instead of statements...
-  `if` becomes an expression, Lambdas are expressions... but still keeping
-  traditional procedural elements to the language such as `for..`
-- this is the seed of the `return` vs `return@` difference
+Kotlin is aiming towards being a more functional language - supporting a more
+functional paradigm - Scala
+
+Leads to adding more expressions into the language instead of statements...
+`if` becomes an expression, Lambdas are expressions... but still keeping
+traditional procedural programming elements such as `for...`
+
+this is the seed of the `return` vs `return@` difference
 
 ---
 # 3. Plain old bad design
 
-.middle[## Lambdas vs. Anonymous Functions]
+```kotlin
+val addTwo = { number ->
+  number + 2
+}
+```
+
+## vs.
+
+```kotlin
+val addTwo = fun (number: Int): Int {
+  return number + 2
+}
+```
 
 ???
 I'm not a language designer - thank goodness - but this seems like a bad move to
 me. It adds a confusion to the heart of the language.
+
+And it seems to be driven by the creation of a proceedural 'escape hatch' in the
+middle of the language. But it's not even a _necessary_ escape hatch - they'd
+already got round it with `@return` - it's just a pretty looking one.
+
+Do we need ornate escape hatches in our languages?
+
+But even then - what's the problem? So what, two different syntaxes for the same
+thing - does that even matter?
 
 ---
 
@@ -466,8 +513,10 @@ doing arabic numerals, half doing Roman.
 But in a way this is worse, because we mostly have an intuitive idea of integers.
 By naming the two syntaxes after the only two vaguely neutral words for
 a lambda/anonymous function, the confusion can only be compounded - write
-a lambda - do you mean an anonymous function - no I mean a lambda :( - it's
+a lambda - do you mean an anonymous function - no I mean a lambda :( - it's even
 worse than Ruby.
+
+So, yeah, I think it matters.
 
 ---
 class: middle, center
@@ -476,11 +525,14 @@ class: middle, center
 
 ???
 
-- There's a lot about Kotlin that I do like
-- it's very neat the way it handles `null` as a value and turns it into something like a `Maybe`.
-- And the IDE support is just wonderful - made me an IntelliJ convert.
-- But what worries me is that it's a (relatively) young language which has already become quite
-  messy in this one particular area.
+There's a lot about Kotlin that I do like
+
+it's very neat the way it handles `null` as a value and turns it into something like a `Maybe`.
+
+And the IDE support is just wonderful - made me an IntelliJ convert.
+
+But what worries me is that it's a (relatively) young language which has already become quite
+messy in this one particular area.
 
 ---
 
@@ -489,18 +541,24 @@ class: center, middle
 
 ???
 
-- So - questions - but for you?
-- Is this really a problem with Kotlin? Do those who write Kotlin recognise what
-  I'm saying?
-- Do all languages suffer from this sort of problem? Is it a 'new' language
-  issue? Is it a 'multi paradigm' language issue?
-- Am I just amazingly snooty and secretly wish I was clever enough to write
-  Common Lisp for a living.
+So - questions - but for you?
+
+Is this really a problem with Kotlin? Do those who write Kotlin recognise what
+I'm saying?
+
+Do all languages suffer from this sort of problem? Is it a 'new' language
+issue? Is it a 'multi paradigm' language issue?
+
+Am I just being amazingly snooty and secretly wish I was clever enough to write
+Common Lisp for a living.
 
 ---
 
 class: center, middle
+
 # Thank You!
+![wake up](https://media.giphy.com/media/26FxCOdhlvEQXbeH6/giphy.gif)
+
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
     <script>
